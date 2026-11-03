@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Room booking · elegant form</title>
+  <!-- Google Font & simple CSS reset -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f6f9fc 0%, #e9f0f5 100%);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+
+    .booking-card {
+      max-width: 860px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 2rem;
+      box-shadow: 0 25px 45px -12px rgba(0, 20, 30, 0.25), 0 4px 12px rgba(0, 0, 0, 0.05);
+      padding: 2rem 2.5rem 2.5rem;
+      transition: all 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(2px);
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #0b2b3b;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.35rem;
+    }
+
+    h1 span {
+      background: #d0e6f2;
+      font-size: 1.5rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 40px;
+      line-height: 1;
+    }
+
+    .subhead {
+      font-size: 0.95rem;
+      color: #4a6572;
+      margin-bottom: 2rem;
+      border-left: 3px solid #2e7d8f;
+      padding-left: 1rem;
+      font-weight: 400;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.4rem 1.8rem;
+    }
+
+    .full-width {
+      grid-column: span 2;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: #1f4a5c;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    label i {
+      font-style: normal;
+      color: #2e7d8f;
+      font-weight: 600;
+    }
+
+    input, select, textarea {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      padding: 0.8rem 1rem;
+      border: 1.5px solid #d9e5ec;
+      border-radius: 1rem;
+      background: #f9fdfe;
+      transition: all 0.2s ease;
+      outline: none;
+      color: #0f2c38;
+      width: 100%;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #2e7d8f;
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(46, 125, 143, 0.12);
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #9bb4c1;
+      font-weight: 400;
+      opacity: 1;
+    }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234a6572' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1.2rem center;
+      background-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .date-group {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .date-group .form-group {
+      flex: 1;
+    }
+
+    /* small hint for date inputs */
+    .date-hint {
+      font-size: 0.75rem;
+      color: #688a99;
+      margin-top: 0.2rem;
+    }
+
+    /* actions */
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 1.2rem;
+      margin-top: 2.2rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid #e1edf3;
+    }
+
+    .btn {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.85rem 2rem;
+      border-radius: 2.5rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-primary {
+      background: #1f4a5c;
+      color: white;
+      box-shadow: 0 8px 18px -6px rgba(22, 78, 99, 0.4);
+    }
+
+    .btn-primary:hover {
+      background: #0f3646;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 22px -8px rgba(22, 78, 99, 0.5);
+    }
+
+    .btn-primary:active {
+      transform: translateY(1px);
+      box-shadow: 0 4px 10px -4px rgba(22, 78, 99, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #356f80;
+      border: 1.5px solid #c4dae4;
+      padding: 0.85rem 1.8rem;
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background: #e6f2f7;
+      border-color: #7da9b9;
+    }
+
+    /* simple guidance */
+    .required-note {
+      font-size: 0.8rem;
+      color: #5a7e8c;
+      margin-right: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .required-note i {
+      font-style: normal;
+      color: #b13e3e;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    /* responsive */
+    @media (max-width: 680px) {
+      .booking-card {
+        padding: 1.7rem 1.3rem;
+        border-radius: 1.8rem;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+
+      .full-width {
+        grid-column: span 1;
+      }
+
+      h1 {
+        font-size: 1.7rem;
+      }
+
+      .form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        gap: 0.8rem;
+      }
+
+      .btn {
+        padding: 0.9rem 1.2rem;
+      }
+
+      .required-note {
+        justify-content: center;
+      }
+    }
+
+    /* optional custom accent */
+    .accent-icon {
+      font-size: 1.3rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="booking-card">
+    <h1>
+      <span>🛏️</span> Room booking
+    </h1>
+    <div class="subhead">
+      Reserve your space — fill in the details below
+    </div>
+
+    <!-- Booking form -->
+    <form action="#" method="post" id="roomBookingForm">
+      <div class="form-grid">
+
+        <!-- Full name -->
+        <div class="form-group">
+          <label for="fullname">Full name <i>*</i></label>
+          <input type="text" id="fullname" name="fullname" placeholder="Alex Rivera" required>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email <i>*</i></label>
+          <input type="email" id="email" name="email" placeholder="alex@example.com" required>
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567">
+        </div>
+
+        <!-- Room type -->
+        <div class="form-group">
+          <label for="roomtype">Room type <i>*</i></label>
+          <select id="roomtype" name="roomtype" required>
+            <option value="" disabled selected>Select room</option>
+            <option value="single">Single room</option>
+            <option value="double">Double room</option>
+            <option value="suite">Suite</option>
+            <option value="family">Family room</option>
+            <option value="deluxe">Deluxe king</option>
+          </select>
+        </div>
+
+        <!-- Check-in / Check-out (grouped) -->
+        <div class="full-width">
+          <div class="date-group">
+            <div class="form-group">
+              <label for="checkin">Check-in <i>*</i></label>
+              <input type="date" id="checkin" name="checkin" required>
+              <span class="date-hint">after 14:00</span>
+            </div>
+            <div class="form-group">
+              <label for="checkout">Check-out <i>*</i></label>
+              <input type="date" id="checkout" name="checkout" required>
+              <span class="date-hint">before 11:00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Number of guests -->
+        <div class="form-group">
+          <label for="guests">Guests <i>*</i></label>
+          <select id="guests" name="guests" required>
+            <option value="" disabled selected>Select</option>
+            <option value="1">1 adult</option>
+            <option value="2">2 adults</option>
+            <option value="3">3 adults</option>
+            <option value="4">4 adults</option>
+            <option value="5+">5+ (contact us)</option>
+          </select>
+        </div>
+
+        <!-- Number of rooms (optional but useful) -->
+        <div class="form-group">
+          <label for="rooms">Rooms</label>
+          <select id="rooms" name="rooms">
+            <option value="1" selected>1 room</option>
+            <option value="2">2 rooms</option>
+            <option value="3">3 rooms</option>
+          </select>
+        </div>
+
+        <!-- Special requests (full width) -->
+        <div class="form-group full-width">
+          <label for="requests">Special requests</label>
+          <textarea id="requests" name="requests" placeholder="Early check-in, dietary needs, high floor, etc."></textarea>
+        </div>
+
+      </div>
+      <!-- end form-grid -->
+
+      <!-- actions & note -->
+      <div class="form-actions">
+        <div class="required-note">
+          <i>*</i> Required fields
+        </div>
+        <button type="button" class="btn btn-secondary" id="resetBtn">Clear</button>
+        <button type="submit" class="btn btn-primary">
+          <span>📅</span> Book now
+        </button>
+      </div>
+    </form>
+
+    <!-- small note (simulated success) -->
+    <p id="formFeedback" style="margin-top: 1rem; font-size: 0.9rem; color: #1f4a5c; text-align: center; opacity: 0.8; transition: 0.2s;"></p>
+  </div>
+
+  <script>
+    (function() {
+      const form = document.getElementById('roomBookingForm');
+      const feedback = document.getElementById('formFeedback');
+      const resetBtn = document.getElementById('resetBtn');
+
+      // Simple date validation: check-out after check-in
+      const checkin = document.getElementById('checkin');
+      const checkout = document.getElementById('checkout');
+
+      // set min check-out date based on check-in
+      function updateCheckoutMin() {
+        if (checkin.value) {
+          // set min checkout to next day after checkin
+          const checkinDate = new Date(checkin.value);
+          const nextDay = new Date(checkinDate);
+          nextDay.setDate(checkinDate.getDate() + 1);
+          const yyyy = nextDay.getFullYear();
+          const mm = String(nextDay.getMonth() + 1).padStart(2, '0');
+          const dd = String(nextDay.getDate()).padStart(2, '0');
+          checkout.min = `${yyyy}-${mm}-${dd}`;
+          // if current checkout is before new min, reset
+          if (checkout.value && checkout.value < checkout.min) {
+            checkout.value = checkout.min;
+          }
+        } else {
+          checkout.min = '';
+        }
+      }
+
+      // set default check-in to today
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const dd = String(today.getDate()).padStart(2, '0');
+      const todayStr = `${yyyy}-${mm}-${dd}`;
+      if (checkin && !checkin.value) {
+        checkin.value = todayStr;
+      }
+      if (checkout && !checkout.value) {
+        // tomorrow as default checkout
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+        const tomorrowStr = `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(2, '0')}-${String(tomorrow.getDate()).padStart(2, '0')}`;
+        checkout.value = tomorrowStr;
+      }
+      updateCheckoutMin();
+
+      checkin.addEventListener('change', updateCheckoutMin);
+
+      // Form submission handling (demo only)
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // simple validation for check-out vs check-in
+        if (checkin.value && checkout.value && checkout.value <= checkin.value) {
+          feedback.textContent = '⚠️ Check-out must be after check-in.';
+          feedback.style.color = '#b13e3e';
+          checkout.focus();
+          return;
+        }
+
+        // gather data
+        const fullname = document.getElementById('fullname').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const roomtype = document.getElementById('roomtype').value;
+        const guests = document.getElementById('guests').value;
+
+        if (!fullname || !email || !roomtype || !guests || !checkin.value || !checkout.value) {
+          feedback.textContent = '⚠️ Please fill all required fields.';
+          feedback.style.color = '#b13e3e';
+          return;
+        }
+
+        // fake success message
+        feedback.textContent = `✅ Booking request sent, ${fullname.split(' ')[0]}! We’ll confirm by email.`;
+        feedback.style.color = '#1f7a5c';
+        form.reset();
+
+        // after reset, reset check-in/out defaults
+        checkin.value = todayStr;
+        const tomorrowReset = new Date(today);
+        tomorrowReset.setDate(today.getDate() + 1);
+        const tomorrowResetStr = `${tomorrowReset.getFullYear()}-${String(tomorrowReset.getMonth() + 1).padStart(2, '0')}-${String(tomorrowReset.getDate()).padStart(2, '0')}`;
+        checkout.value = tomorrowResetStr;
+        updateCheckoutMin();
+        checkout.min = tomorrowResetStr; // ensure consistency
+
+        // remove feedback after 6 sec
+        setTimeout(() => {
+          feedback.textContent = '';
+        }, 6000);
+      });
+
+      // Reset button
+      resetBtn.addEventListener('click', function() {
+        form.reset();
+
+        // re-set default dates
+        checkin.value = todayStr;
+        const tomorrowReset = new Date(today);
+        tomorrowReset.setDate(today.getDate() + 1);
+        const tomorrowResetStr = `${tomorrowReset.getFullYear()}-${String(tomorrowReset.getMonth() + 1).padStart(2, '0')}-${String(tomorrowReset.getDate()).padStart(2, '0')}`;
+        checkout.value = tomorrowResetStr;
+        updateCheckoutMin();
+
+        feedback.textContent = 'Form cleared.';
+        feedback.style.color = '#4a6572';
+        setTimeout(() => {
+          feedback.textContent = '';
+        }, 2500);
+      });
+    })();
+  </script>
+</body>
+</html>
